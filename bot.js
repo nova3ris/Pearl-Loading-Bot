@@ -27,7 +27,7 @@ function loadPearl(target, username, lastWord) {
                 bot.pathfinder.setGoal(new goals.GoalBlock(config.homePoint.x, config.homePoint.y, config.homePoint.z))
 
                 bot.once('goal_reached', () => {
-                    bot.chat(`/msg ${username} Successfully loaded ${lastWord}'s pearl.`)
+                    bot.chat(`/w ${username} Successfully loaded ${lastWord}'s pearl.`)
                     bot.afk.start()
                 })
             }, 1000);
@@ -40,13 +40,15 @@ const bot = mineflayer.createBot({
     host: config.host,
     port: config.port,
     username: config.username,
-    //auth: 'microsoft'
+    auth: 'microsoft'
 })
 
 bot.loadPlugin(pathfinder)
 bot.loadPlugin(antiafk)
 
 bot.once('spawn', () => {
+    console.log('Connected to server.')
+
     const defaultMove = new Movements(bot)
     defaultMove.canDig = false
     bot.pathfinder.setMovements(defaultMove)
@@ -70,24 +72,22 @@ bot.on('whisper', (username, message) => {
                 loadPearl(target, username, lastWord)
 
             } else
-                bot.chat(`/msg ${username} No stasis coordinates found for ${lastWord}.`)
+                bot.chat(`/w ${username} No stasis coordinates found for ${lastWord}.`)
 
         } else if (message.startsWith('!quit')) {
-            bot.chat(`/msg ${username} Shutting down the pearl bot in 3 seconds..`)
+            bot.chat(`/w ${username} Shutting down the pearl bot in 3 seconds..`)
             setTimeout(() => {
                 bot.quit()
             }, 3000)
 
         } else if (message.startsWith('!help')) {   
-            bot.chat(`/msg ${username} !pearl [name]: Loads the players pearl.`)
-            bot.chat(`/msg ${username} !quit: Shuts down the pearl bot only.`)
-            bot.chat(`/msg ${username} !help: Displays this menu.`)
+            bot.chat(`/w ${username} Check https://github.com/nova3ris/Pearl-Loading-Bot for a list of commands.`)
 
         } else
-            bot.chat(`/msg ${username} That is not a valid command. Use !help for a list of commands.`)
+            bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
 
     } else if (message.startsWith('!')) 
-        bot.chat(`/msg ${username} You are not permitted to use the bot.`)
+        bot.chat(`/w ${username} You are not permitted to use the bot.`)
 
     else return
 })
