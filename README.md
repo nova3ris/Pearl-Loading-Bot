@@ -55,6 +55,7 @@ https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
 - `!pearl [name]` - Loads the specified pearl stasis chamber.
 - `!quit` - Shuts down the bot.
 - `!help` - Displays available commands.
+- `!here` - Makes the bot walk to the position you are standing in.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment

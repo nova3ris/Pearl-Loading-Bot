@@ -54,7 +54,7 @@ bot.once('spawn', () => {
     bot.pathfinder.setMovements(defaultMove)
 
     bot.afk.setOptions({
-        actions: ['rotate', 'walk', 'jump', 'swingArm'],
+        actions: ['rotate', 'jump', 'swingArm'],
         chatMessages: [],
         fishing: false
     })
@@ -64,6 +64,8 @@ bot.once('spawn', () => {
 bot.on('whisper', (username, message) => {
     if (config.whitelist.includes(username)) {
         if (message.startsWith('!pearl ')) {
+            console.log(`${username} used !pearl`)
+
             const parts = message.split(' ')
             const lastWord = parts[1]
             
@@ -75,13 +77,32 @@ bot.on('whisper', (username, message) => {
                 bot.chat(`/w ${username} No stasis coordinates found for ${lastWord}.`)
 
         } else if (message.startsWith('!quit')) {
+            console.log(`${username} used !quit`)
+
             bot.chat(`/w ${username} Shutting down the pearl bot in 3 seconds..`)
             setTimeout(() => {
                 bot.quit()
             }, 3000)
 
-        } else if (message.startsWith('!help')) {   
+        } else if (message.startsWith('!help')) {
+            console.log(`${username} used !help`)
+
             bot.chat(`/w ${username} Check https://github.com/nova3ris/Pearl-Loading-Bot for a list of commands.`)
+
+        } else if (message.startsWith('!here')) {
+            console.log(`${username} used !here`)
+            const player = bot.players[username]
+            if (player && player.entity) {
+                bot.afk.stop()
+
+                bot.pathfinder.setGoal(new goals.GoalBlock(player.entity.position.x, player.entity.position.y, player.entity.position.z))
+                bot.chat(`/w ${username} Moving to position.`)
+                
+                bot.once('goal_reached', () => {
+                    bot.chat(`/w ${username} Arrived.`)
+                    bot.afk.start()
+                })
+            } else bot.chat(`/w ${username} I cant see you.`)
 
         } else
             bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
