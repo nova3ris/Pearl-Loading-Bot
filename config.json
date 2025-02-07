@@ -1,0 +1,19 @@
+{
+    "host": "localhost",
+    "port": 25565,
+    "username": "PearlLoader",
+
+    "homePoint": {"x": 0, "y": 0, "z": 0},
+
+    "stasis": {
+        "person1": {"x": 0, "y": 0, "z": 0},
+        "person2": {"x": 0, "y": 0, "z": 0},
+        "person3": {"x": 0, "y": 0, "z": 0}
+    },
+
+    "whitelist": [
+        "player1",
+        "player2",
+        "player3"
+    ]
+}

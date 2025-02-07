@@ -1,0 +1,26 @@
+{
+  "name": "pearl-loading-bot",
+  "version": "1.0.0",
+  "description": "Connects to a server and pearls the user on command.",
+  "homepage": "https://github.com/AntiGravity990/Pearl-Loading-Bot#readme",
+  "bugs": {
+    "url": "https://github.com/AntiGravity990/Pearl-Loading-Bot/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntiGravity990/Pearl-Loading-Bot.git"
+  },
+  "license": "ISC",
+  "author": "nova3ris",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mineflayer": "^4.26.0",
+    "mineflayer-antiafk": "github:Etiaro/mineflayer-antiafk",
+    "mineflayer-pathfinder": "^2.4.5",
+    "vec3": "^0.1.10"
+  }
+}
