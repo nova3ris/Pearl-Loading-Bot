@@ -44,7 +44,7 @@ Start the bot with:
 ```sh
 node bot.js
 ```
-OR run launch.bat
+*OR* run launch.bat
 
 To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
 

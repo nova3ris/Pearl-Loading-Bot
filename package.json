@@ -2,13 +2,13 @@
   "name": "pearl-loading-bot",
   "version": "1.0.0",
   "description": "Connects to a server and pearls the user on command.",
-  "homepage": "https://github.com/AntiGravity990/Pearl-Loading-Bot#readme",
+  "homepage": "https://github.com/nova3ris/Pearl-Loading-Bot#readme",
   "bugs": {
-    "url": "https://github.com/AntiGravity990/Pearl-Loading-Bot/issues"
+    "url": "https://github.com/nova3ris/Pearl-Loading-Bot/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AntiGravity990/Pearl-Loading-Bot.git"
+    "url": "git+https://github.com/nova3ris/Pearl-Loading-Bot.git"
   },
   "license": "ISC",
   "author": "nova3ris",
