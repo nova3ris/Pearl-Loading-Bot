@@ -112,3 +112,7 @@ bot.on('whisper', (username, message) => {
 
     else return
 })
+
+bot.on('end', () => {
+    process.exit(0)
+})
