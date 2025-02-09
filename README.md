@@ -56,6 +56,7 @@ https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
 - `!quit` - Shuts down the bot.
 - `!help` - Displays available commands.
 - `!here` - Makes the bot walk to the position you are standing in.
+- `!nearby` - Gives a list of all nearby players.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment

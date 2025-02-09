@@ -104,6 +104,10 @@ bot.on('whisper', (username, message) => {
                 })
             } else bot.chat(`/w ${username} I cant see you.`)
 
+        } else if (message.startsWith('!nearby')) {
+            const playerNames = Object.keys(bot.players).filter(name => name !== bot.username)
+            bot.chat(`/w ${username} Nearby players: ${playerNames}`)
+
         } else
             bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
 
