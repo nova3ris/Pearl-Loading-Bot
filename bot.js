@@ -108,6 +108,9 @@ bot.on('whisper', (username, message) => {
             const playerNames = Object.keys(bot.players).filter(name => name !== bot.username)
             bot.chat(`/w ${username} Nearby players: ${playerNames}`)
 
+        } else if (message.startsWith('!test')) {
+            bot.chat(`/w ${username} The pearl bot is running.`)
+
         } else
             bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
 

@@ -57,6 +57,7 @@ https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
 - `!help` - Displays available commands.
 - `!here` - Makes the bot walk to the position you are standing in.
 - `!nearby` - Gives a list of all nearby players.
+- `!test` - Simply checks if the bot is running.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment
