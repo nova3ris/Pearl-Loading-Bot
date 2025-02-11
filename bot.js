@@ -1,8 +1,11 @@
 const config = require('./config.json')
+const pearls = require('./pearls.json')
+const whitelist = require('./whitelist.json')
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
 const antiafk = require('mineflayer-antiafk')
 const { Vec3 } = require('vec3')
+const fs = require('fs')
 
 function loadPearl(target, username, lastWord) {
     bot.afk.stop()
@@ -54,7 +57,7 @@ bot.once('spawn', () => {
     bot.pathfinder.setMovements(defaultMove)
 
     bot.afk.setOptions({
-        actions: ['rotate', 'jump', 'swingArm'],
+        actions: ['rotate', 'jump', 'walk', 'swingArm'],
         chatMessages: [],
         fishing: false
     })
@@ -62,37 +65,31 @@ bot.once('spawn', () => {
 })
 
 bot.on('whisper', (username, message) => {
-    if (config.whitelist.includes(username)) {
+    if (whitelist.includes(username)) {
         if (message.startsWith('!pearl ')) {
-            console.log(`${username} used !pearl`)
-
             const parts = message.split(' ')
             const lastWord = parts[1]
             
-            if (config.stasis[lastWord]) {
-                const target = config.stasis[lastWord]
+            if (pearls[lastWord]) {
+                const target = pearls[lastWord]
                 loadPearl(target, username, lastWord)
 
             } else
                 bot.chat(`/w ${username} No stasis coordinates found for ${lastWord}.`)
 
         } else if (message.startsWith('!quit')) {
-            console.log(`${username} used !quit`)
-
             bot.chat(`/w ${username} Shutting down the pearl bot in 3 seconds..`)
             setTimeout(() => {
-                bot.quit()
+                bot.end()
+                process.exit(0)
             }, 3000)
 
         } else if (message.startsWith('!help')) {
-            console.log(`${username} used !help`)
-
             bot.chat(`/w ${username} Check https://github.com/nova3ris/Pearl-Loading-Bot for a list of commands.`)
 
         } else if (message.startsWith('!here')) {
-            console.log(`${username} used !here`)
             const player = bot.players[username]
-            if (player && player.entity) {
+            if (player) {
                 bot.afk.stop()
 
                 bot.pathfinder.setGoal(new goals.GoalBlock(player.entity.position.x, player.entity.position.y, player.entity.position.z))
@@ -102,18 +99,83 @@ bot.on('whisper', (username, message) => {
                     bot.chat(`/w ${username} Arrived.`)
                     bot.afk.start()
                 })
-            } else bot.chat(`/w ${username} I cant see you.`)
-
-        } else if (message.startsWith('!nearby')) {
-            const playerNames = Object.keys(bot.players).filter(name => name !== bot.username)
-            bot.chat(`/w ${username} Nearby players: ${playerNames}`)
-
+            } else bot.chat(`/w ${username} I can't see you.`)
+            
         } else if (message.startsWith('!test')) {
             bot.chat(`/w ${username} The pearl bot is running.`)
+
+        } else if (message.startsWith('!chamber')) {
+            const parts = message.split(' ')
+            const mode = parts[1]
+            const lastWord = parts[2]
+
+            if (mode === 'add') {
+                const player = bot.players[username]
+                if (player) {
+                    if (!pearls[lastWord]) {
+                        let players = JSON.parse(fs.readFileSync('pearls.json', 'utf8'))  
+                        players[lastWord] = {
+                            x: player.entity.position.x >= 0 ? Math.floor(player.entity.position.x) : Math.ceil(player.entity.position.x),
+                            y: player.entity.position.y >= 0 ? Math.floor(player.entity.position.y) : Math.ceil(player.entity.position.y),
+                            z: player.entity.position.z >= 0 ? Math.floor(player.entity.position.z) : Math.ceil(player.entity.position.z)
+                        }
+                        fs.writeFileSync('pearls.json', JSON.stringify(players, null, 2), 'utf8')
+
+                        bot.chat(`/w ${username} Saved a new pearl chamber called ${lastWord}.`)
+
+                    } else
+                        bot.chat(`/w ${username} ${lastWord} already has a pearl set.`)
+
+                } else
+                    bot.chat(`/w ${username} I can't see you.`)
+
+            } else if (mode === 'del') {
+                if (pearls[lastWord]) {
+                    let players = JSON.parse(fs.readFileSync('pearls.json', 'utf8'))
+                    delete players[lastWord]
+                    players = fs.writeFileSync('pearls.json', JSON.stringify(players, null, 2), 'utf8')
+
+                    bot.chat(`/w ${username} Deleted pearl coordinates for ${lastWord}`)
+
+                } else
+                    bot.chat(`/w ${username} ${lastWord} Does not have a pearl added.`)
+
+            } else
+                bot.chat(`/w ${username} Invalid syntax.`)
+        
+        } else if (message.startsWith('!whitelist')) {
+            const parts = message.split(' ')
+            const mode = parts[1]
+            const lastWord = parts[2]
+
+            if (mode === 'add') {
+                if (!whitelist.includes(lastWord)) {
+                    let whitelist = JSON.parse(fs.readFileSync('whitelist.json', 'utf8'))
+                    whitelist.push(lastWord)
+                    whitelist = fs.writeFileSync('whitelist.json', JSON.stringify(whitelist, null, 2), 'utf8')
+
+                    bot.chat(`/w ${username} Added ${lastWord} to the whitelist.`)
+
+                } else
+                    bot.chat(`/w ${username} ${lastWord} is already on the whitelist.`)
+
+            } else if (mode === 'del') {
+                if (whitelist.includes(lastWord)) {
+                    let whitelist = JSON.parse(fs.readFileSync('whitelist.json', 'utf8'))
+                    whitelist = whitelist = whitelist.filter(user => user !== lastWord)
+                    whitelist = fs.writeFileSync('whitelist.json', JSON.stringify(whitelist, null, 2), 'utf8')
+
+                    bot.chat(`/w ${username} Removed ${lastWord} from the whitelist.`)
+                } else
+                    bot.chat(`/w ${username} ${lastWord} was not on the whitelist.`)
+
+            } else
+                bot.chat(`/w ${username} Invalid syntax.`)
 
         } else
             bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
 
+    console.log(`${username} used ${message}`)
     } else if (message.startsWith('!')) 
         bot.chat(`/w ${username} You are not permitted to use the bot.`)
 

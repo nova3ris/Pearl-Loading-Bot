@@ -29,15 +29,17 @@ Edit `config.json` with your server details.
 
 By default most servers port will be 25565.
 
-Replace "username" with the IGN of the account that you want to connect to the server with.
+Replace `username` with the IGN of the account that you want to connect to the server with.
 
-To get the coordinates for the stasis chamber close the trapdoor, stand on top of it, and take coords from there.
+Set `homepoint` to where you want the bot to afk at.
 
-The coordinates must be whole numbers, no decimals.
+To add your pearl chamber to the bot close the trapdoor, stand on top, and message the bot `!chamber set [name]`
 
-Replace 'person1' - 'person3' with that pearl owners name. Doesn't need to be their exact IGN.
+To delete a pearl chamber message the bot `!chamber del [name]`
 
-Also replace "player1" - "player3" in whitelist with the player's exact IGN.
+To add someone to the whitelist, the person sending the command needs to be whitelisted (replace `firstPerson` with their IGN), then use `!whitelist add [username]` The username must be their exact IGN
+
+To delete someone from the whitelist use `whitelist del [username]`
 
 ## Usage
 Start the bot with:
@@ -56,8 +58,9 @@ https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
 - `!quit` - Shuts down the bot.
 - `!help` - Displays available commands.
 - `!here` - Makes the bot walk to the position you are standing in.
-- `!nearby` - Gives a list of all nearby players.
 - `!test` - Simply checks if the bot is running.
+- `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
+- `!whitelist add/dell [username]` - Adds or removes someone from the whitelist.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment
