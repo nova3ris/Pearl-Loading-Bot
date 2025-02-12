@@ -3,5 +3,7 @@
     "port": 25565,
     "username": "PearlLoader",
 
-    "homePoint": {"x": 0, "y": 0, "z": 0}
+    "homePoint": {"x": 0, "y": 0, "z": 0},
+
+    "autoReconnect": true
 }

@@ -8,6 +8,7 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
 - **Anti-AFK System**: Prevents the bot from being kicked for inactivity.
 - **Pathfinding**: Uses the `mineflayer-pathfinder` plugin to navigate the world.
 - **Command Handling**: Processes commands received via whisper messages from whitelisted users.
+- **Auto Reconnect**: If the bot gets disconnected it will automatically reconnect.
 
 ## Installation
 ### Requirements
@@ -31,6 +32,8 @@ Replace `username` with the IGN of the account that you want to connect to the s
 
 Set `homePoint` to where you want the bot to afk at.
 
+If you want the bot stay disconnected if it disconnects, then change `autoReconnect` to false. (default true).
+
 Replace `"person1"` in `whitelist.json` with one whitelisted person. This person can then add everyone else through bot commands.
 
 ## Usage
@@ -51,7 +54,7 @@ To add someone to the whitelist, the person sending the command needs to be whit
 To delete someone from the whitelist use `whitelist del [username]`
 
 **Important:**
-You must restart the bot after making changes to the whitelist or pearl list in order for `!pearl` to work.
+You must restart the bot after making changes to the whitelist or pearl list in order for `!pearl` to work. (`!restart` doesn't work for this, you must restart fully)
 
 To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
 
@@ -63,6 +66,7 @@ To pearl someone type the command `!pearl` followed by the name that corresponds
 - `!test` - Simply checks if the bot is running.
 - `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
 - `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
+- `!restart` - Restarts the bot.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment
