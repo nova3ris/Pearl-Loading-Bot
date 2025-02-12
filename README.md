@@ -22,8 +22,6 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
    ```
     *OR* run install.bat
 
-3. Sign in with your microsoft login.
-
 ## Configuration (`config.json`)
 Edit `config.json` with your server details.
 
@@ -31,15 +29,9 @@ By default most servers port will be 25565.
 
 Replace `username` with the IGN of the account that you want to connect to the server with.
 
-Set `homepoint` to where you want the bot to afk at.
+Set `homePoint` to where you want the bot to afk at.
 
-To add your pearl chamber to the bot close the trapdoor, stand on top, and message the bot `!chamber set [name]`
-
-To delete a pearl chamber message the bot `!chamber del [name]`
-
-To add someone to the whitelist, the person sending the command needs to be whitelisted (replace `firstPerson` with their IGN), then use `!whitelist add [username]` The username must be their exact IGN
-
-To delete someone from the whitelist use `whitelist del [username]`
+Replace `"person1"` in `whitelist.json` with one whitelisted person. This person can then add everyone else through bot commands.
 
 ## Usage
 Start the bot with:
@@ -48,10 +40,20 @@ node bot.js
 ```
 *OR* run launch.bat
 
-To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
+The first time you run the code you will be prompted to sign into your microsoft account.
 
-Example:
-https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
+To add your pearl chamber to the bot close the trapdoor, stand on top, and message the bot `!chamber add [name]`
+
+To delete a pearl chamber message the bot `!chamber del [name]`
+
+To add someone to the whitelist, the person sending the command needs to be whitelisted (replace `firstPerson` with their IGN), then use `!whitelist add [username]` The username must be their exact IGN.
+
+To delete someone from the whitelist use `whitelist del [username]`
+
+**Important:**
+You must restart the bot after making changes to the whitelist or pearl list in order for `!pearl` to work.
+
+To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
 
 ## Commands
 - `!pearl [name]` - Loads the specified pearl stasis chamber.
@@ -60,7 +62,7 @@ https://www.mediafire.com/file/agtot6ysmyamqia/PearlBot_Example.mp4/file
 - `!here` - Makes the bot walk to the position you are standing in.
 - `!test` - Simply checks if the bot is running.
 - `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
-- `!whitelist add/dell [username]` - Adds or removes someone from the whitelist.
+- `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment
