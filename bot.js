@@ -56,6 +56,7 @@ function spawnBot() {
         host: config.host,
         port: config.port,
         username: config.username,
+        auth: 'microsoft'
     })
 
     bot.loadPlugin(pathfinder)
