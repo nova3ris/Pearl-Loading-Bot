@@ -53,9 +53,6 @@ To add someone to the whitelist, the person sending the command needs to be whit
 
 To delete someone from the whitelist use `whitelist del [username]`
 
-**Important:**
-You must restart the bot after making changes to the whitelist or pearl list in order for `!pearl` to work. (`!restart` doesn't work for this, you must restart fully)
-
 To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
 
 ## Commands
