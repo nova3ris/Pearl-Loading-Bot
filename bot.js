@@ -77,7 +77,7 @@ function spawnBot() {
         console.log(`Bot disconnected. Reason: ${reason}`)
         if (config.autoReconnect) {
             console.log('Reconnecting..')
-            setTimeout(spawnBot, 60000)
+            setTimeout(spawnBot, 20000)
         } else {
             bot.end()
             process.exit()
