@@ -36,9 +36,7 @@ If you ever need to reset the config, manually delete `config.json` as well as `
   1. In the "OAuth2" tab, [generate an invite link with these permissions](https://imgur.com/rSn10ZN)
   2. Open the invite link in a web browser and select the server to invite the bot to
 * Now in your discord server:
-  1. In the [discord server settings](https://i.imgur.com/q8YQMJT.png), create [a role for users to manage the bot.](https://i.imgur.com/aJwE1Y8.png) Assign the role to yourself and any other users who should be able to manage the bot.
   1. Create a [channel to manage the proxy in](https://i.imgur.com/DVeJBpo.png)
-  1. (Optional) create another channel for the chat relay
 * At first launch, the launcher will ask you to configure the token/role/channel ID's (or you can use `discord` command after)
   * To get the ID's, you must enable [Developer Mode](https://i.imgur.com/qujvmiC.png) in your discord user settings
   * Right-click on the roles/channels you created and [click "Copy ID"](https://i.imgur.com/RDm3Gso.png)
@@ -50,7 +48,7 @@ To add your pearl chamber to the bot close the trapdoor, stand on top, and messa
 
 To delete a pearl chamber message the bot `!chamber del [name]`
 
-To add someone to the whitelist, the person sending the command needs to be whitelisted (replace `firstPerson` with their IGN), then use `!whitelist add [username]` The username must be their exact IGN.
+To add someone to the whitelist use `!whitelist add [username]` The username must be their exact IGN.
 
 To delete someone from the whitelist use `whitelist del [username]`
 
@@ -59,9 +57,9 @@ To pearl someone type the command `!pearl` followed by the name that corresponds
 ## In Game Commands
 - `!pearl [name]` - Loads the specified pearl stasis chamber.
 - `!help` - Displays available commands.
-- `!here` - Makes the bot walk to the position you are standing in.
+- `!here` - Makes the bot walk to your coordinates.
 - `!test` - Simply checks if the bot is running.
-- `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
+- `!chamber add/del [name]` - Adds or deletes someones pearl chamber.
 - `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
 
 ## Discord Commands
