@@ -22,6 +22,7 @@
     "mineflayer": "^4.26.0",
     "mineflayer-antiafk": "github:Etiaro/mineflayer-antiafk",
     "mineflayer-pathfinder": "^2.4.5",
+    "readline-sync": "^1.4.10",
     "vec3": "^0.1.10"
   }
 }

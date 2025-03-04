@@ -7,7 +7,7 @@ const antiafk = require('mineflayer-antiafk')
 const { Vec3 } = require('vec3')
 const fs = require('fs')
 
-let Client
+let client
 if (config.discordBot) {
     const { Client, GatewayIntentBits } = require('discord.js')
 
@@ -21,15 +21,13 @@ if (config.discordBot) {
         discordLog('`Discord bot running`')
     })
 
-    client.on('messageCreate', message => {
-        if (message.member.roles.cache.has(config.roleID)) {
-            if (message.content === '!stop') {
-                message.reply('`Shutting down pearl bot`')
-                bot.quit()
-            } else if (message.content === '!start') {
-                message.reply('`Starting pearl bot`')
-                spawnBot()
-            }
+    client.on('messageCreate', (message) => {
+        if (message.content === '!stop') {
+            message.reply('`Shutting down pearl bot`')
+            bot.quit()
+        } else if (message.content === '!start') {
+            message.reply('`Starting pearl bot`')
+            spawnBot()
         }
     })
 }
@@ -101,6 +99,7 @@ function spawnBot() {
 
     bot.once('spawn', () => {
         console.log('Connected to server.')
+        discordLog('Connected to server.')
         const defaultMove = new Movements(bot)
         defaultMove.canDig = false
         bot.pathfinder.setMovements(defaultMove)
@@ -122,7 +121,7 @@ function spawnBot() {
 
 function initCommands() {
     bot.on('whisper', (username, message) => {
-        if (whitelist.includes(username)) {
+        if (whitelist.includes(username) || username === config.whitelistMain) {
             if (message.startsWith('!pearl ')) {
                 const parts = message.split(' ')
                 const lastWord = parts[1]
@@ -188,11 +187,6 @@ function initCommands() {
                         bot.chat(`/w ${username} Removed ${lastWord} from the whitelist.`)
                     } else bot.chat(`/w ${username} ${lastWord} was not on the whitelist.`)
                 } else bot.chat(`/w ${username} Invalid syntax.`)
-
-            } else if (message.startsWith('!restart')) {
-                bot.chat(`/w ${username} Restarting..`)
-                bot.end()
-
             } else bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
             const content = `${username} used [${message}]`
             console.log(content)

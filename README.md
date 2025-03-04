@@ -17,25 +17,16 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
 - A Minecraft account (Microsoft authentication supported)
 
 ### Setup
-1. Download and extract the zip file.
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
-    *OR* run install.bat
+To initialise the bot you need to open a terminal and do the following command:
+- If you are on linux do `./launch.sh`
+- If you are on windows do `./launch.bat`
+You will be prompted with a series of questions to answer.
 
-## Configuration (`config.json`)
-Edit `config.json` with your server details.
+The first time you run it you need to sign in with a microsoft account.
 
-By default most servers port will be 25565.
+To run the bot again do the same command, this time you wont need to answer the questions.
 
-Replace `username` with the IGN of the account that you want to connect to the server with.
-
-Set `homePoint` to where you want the bot to afk at.
-
-If you want the bot stay disconnected if it disconnects, then change `autoReconnect` to false. (default true).
-
-Replace `"person1"` in `whitelist.json` with one whitelisted person. This person can then add everyone else through bot commands.
+If you ever need to reset the config, manually delete `config.json` as well as `node_modules`
 
 ## Discord Bot Setup
 * Create a discord bot here: https://discord.com/developers/
@@ -55,14 +46,6 @@ Replace `"person1"` in `whitelist.json` with one whitelisted person. This person
 *Credit to https://github.com/rfresh2/ZenithProxy for the text above*
 
 ## Usage
-Start the bot with:
-```sh
-node bot.js
-```
-*OR* run launch.bat
-
-The first time you run the code you will be prompted to sign into your microsoft account.
-
 To add your pearl chamber to the bot close the trapdoor, stand on top, and message the bot `!chamber add [name]`
 
 To delete a pearl chamber message the bot `!chamber del [name]`
@@ -80,7 +63,6 @@ To pearl someone type the command `!pearl` followed by the name that corresponds
 - `!test` - Simply checks if the bot is running.
 - `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
 - `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
-- `!restart` - Restarts the bot.
 
 ## Discord Commands
 - `!stop` - Stops the bot until it is started up again.
@@ -91,4 +73,4 @@ To pearl someone type the command `!pearl` followed by the name that corresponds
 - [`mineflayer`](https://github.com/PrismarineJS/mineflayer) - Minecraft bot framework.
 - [`mineflayer-pathfinder`](https://github.com/PrismarineJS/mineflayer-pathfinder) - Pathfinding AI.
 - [`mineflayer-antiafk`](https://github.com/etiaro/mineflayer-antiafk) - Prevents AFK kicks.
-- [`vec3`](https://github.com/PrismarineJS/node-vec3) - Manages block interactions
+- [`vec3`](https://github.com/PrismarineJS/node-vec3) - Manages block interactions.
