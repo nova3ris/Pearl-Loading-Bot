@@ -9,6 +9,7 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
 - **Pathfinding**: Uses the `mineflayer-pathfinder` plugin to navigate the world.
 - **Command Handling**: Processes commands received via whisper messages from whitelisted users.
 - **Auto Reconnect**: If the bot gets disconnected it will automatically reconnect.
+- **Discord Bot**: It can be partially controlled by a discord bot, it also logs commands from users.
 
 ## Installation
 ### Requirements
@@ -36,6 +37,23 @@ If you want the bot stay disconnected if it disconnects, then change `autoReconn
 
 Replace `"person1"` in `whitelist.json` with one whitelisted person. This person can then add everyone else through bot commands.
 
+## Discord Bot Setup
+* Create a discord bot here: https://discord.com/developers/
+  * [Screenshots and how to get the bot's token](https://discordpy.readthedocs.io/en/stable/discord.html)
+* Enable `Message Content Intent` under the "Bot" tab. [Example](https://i.imgur.com/iznLeDV.png)
+* Invite the discord bot to a server:
+  1. In the "OAuth2" tab, [generate an invite link with these permissions](https://imgur.com/rSn10ZN)
+  2. Open the invite link in a web browser and select the server to invite the bot to
+* Now in your discord server:
+  1. In the [discord server settings](https://i.imgur.com/q8YQMJT.png), create [a role for users to manage the bot.](https://i.imgur.com/aJwE1Y8.png) Assign the role to yourself and any other users who should be able to manage the bot.
+  1. Create a [channel to manage the proxy in](https://i.imgur.com/DVeJBpo.png)
+  1. (Optional) create another channel for the chat relay
+* At first launch, the launcher will ask you to configure the token/role/channel ID's (or you can use `discord` command after)
+  * To get the ID's, you must enable [Developer Mode](https://i.imgur.com/qujvmiC.png) in your discord user settings
+  * Right-click on the roles/channels you created and [click "Copy ID"](https://i.imgur.com/RDm3Gso.png)
+
+*Credit to https://github.com/rfresh2/ZenithProxy for the text above*
+
 ## Usage
 Start the bot with:
 ```sh
@@ -55,15 +73,18 @@ To delete someone from the whitelist use `whitelist del [username]`
 
 To pearl someone type the command `!pearl` followed by the name that corresponds to that person's stasis chamber.
 
-## Commands
+## In Game Commands
 - `!pearl [name]` - Loads the specified pearl stasis chamber.
-- `!quit` - Shuts down the bot.
 - `!help` - Displays available commands.
 - `!here` - Makes the bot walk to the position you are standing in.
 - `!test` - Simply checks if the bot is running.
 - `!chamber add/del [name]` - Adds or deletes pearl chamber coordinates for someone.
 - `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
 - `!restart` - Restarts the bot.
+
+## Discord Commands
+- `!stop` - Stops the bot until it is started up again.
+- `!start` - Starts the bot back up.
 
 ## Dependencies
 - [`Node.js`](https://nodejs.org/en) - JavaScript runtime environment

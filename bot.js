@@ -7,6 +7,43 @@ const antiafk = require('mineflayer-antiafk')
 const { Vec3 } = require('vec3')
 const fs = require('fs')
 
+let Client
+if (config.discordBot) {
+    const { Client, GatewayIntentBits } = require('discord.js')
+
+    client = new Client({
+        intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]
+    })
+    client.login(config.token)
+
+    client.once('ready', () => {
+        console.log('Discord bot running..')
+        discordLog('`Discord bot running`')
+    })
+
+    client.on('messageCreate', message => {
+        if (message.member.roles.cache.has(config.roleID)) {
+            if (message.content === '!stop') {
+                message.reply('`Shutting down pearl bot`')
+                bot.quit()
+            } else if (message.content === '!start') {
+                message.reply('`Starting pearl bot`')
+                spawnBot()
+            }
+        }
+    })
+}
+
+function discordLog(content) {
+    if (config.discordBot) {
+        const channel = client.channels.cache.get(config.channelID)
+        if (channel) {
+            channel.send(`\`${content}\``)
+        } else
+            console.log('Could not find a discord channel to send messages to.')
+    }
+}
+
 let bot
 
 function savePearls() {
@@ -73,12 +110,11 @@ function spawnBot() {
 
     bot.on('end', (reason) => {
         console.log(`Bot disconnected. Reason: ${reason}`)
-        if (config.autoReconnect) {
+        if (config.autoReconnect && reason != 'disconnect.quitting') {
             console.log('Reconnecting..')
             setTimeout(spawnBot, 20000)
         } else {
             bot.end()
-            process.exit()
         }
     })
     initCommands()
@@ -92,10 +128,6 @@ function initCommands() {
                 const lastWord = parts[1]
                 if (pearls[lastWord]) loadPearl(pearls[lastWord], username, lastWord)
                 else bot.chat(`/w ${username} No stasis coordinates found for ${lastWord}.`)
-
-            } else if (message.startsWith('!quit')) {
-                bot.chat(`/w ${username} Shutting down the pearl bot in 3 seconds..`)
-                setTimeout(() => { bot.end(); process.exit(0) }, 3000)
 
             } else if (message.startsWith('!help')) {
                 bot.chat(`/w ${username} Check https://github.com/nova3ris/Pearl-Loading-Bot for a list of commands.`)
@@ -162,7 +194,9 @@ function initCommands() {
                 bot.end()
 
             } else bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`)
-            console.log(`${username} used ${message}`)
+            const content = `${username} used [${message}]`
+            console.log(content)
+            discordLog(content)
 
         } else if (message.startsWith('!')) bot.chat(`/w ${username} You are not permitted to use the bot.`)
         else return

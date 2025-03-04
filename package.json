@@ -18,6 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "discord.js": "^14.18.0",
     "mineflayer": "^4.26.0",
     "mineflayer-antiafk": "github:Etiaro/mineflayer-antiafk",
     "mineflayer-pathfinder": "^2.4.5",
