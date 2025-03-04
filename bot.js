@@ -58,6 +58,8 @@ function loadPearl(target, username, lastWord) {
     const goal = new goals.GoalBlock(target.x, target.y, target.z)
     bot.pathfinder.setGoal(goal)
 
+    if (typeof checkInterval !== 'undefined') clearInterval(checkInterval)
+
     checkInterval = setInterval(() => {
         if (bot.entity.position.distanceTo(goal) <= 2) {
             bot.pathfinder.setGoal(null)
