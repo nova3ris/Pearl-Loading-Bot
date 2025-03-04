@@ -18,7 +18,7 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
 
 ### Setup
 To initialise the bot you need to open a terminal and do the following command:
-- If you are on linux do `./launch.sh`
+- If you are on linux do `bash launch.sh`
 - If you are on windows do `./launch.bat`
 You will be prompted with a series of questions to answer.
 
