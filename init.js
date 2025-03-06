@@ -23,7 +23,6 @@ const answers = {
     port: port,
     username: username,
     autoReconnect: autoReconnect,
-    whitelistMain: whitelistMain,
     homePoint: {x, y, z},
     discordBot: discordBot,
     token: token,
@@ -31,3 +30,8 @@ const answers = {
 }
 
 fs.writeFileSync('config.json', JSON.stringify(answers, null, 2))
+
+const pearls = {}
+const whitelist = [whitelistMain]
+fs.writeFileSync('pearls.json', JSON.stringify(pearls, null, 2))
+fs.writeFileSync('whitelist.json', JSON.stringify(whitelist, null, 2))

@@ -23,7 +23,7 @@ You need a zenith proxy to connect to, The bot gets confused with 2b2t's separat
 
 To initialise the bot you need to open a terminal and do the following command:
 - If you are on linux do `bash launch.sh`
-- If you are on windows do `./launch.bat`
+- If you are on windows do `./launch`
 You will be prompted with a series of questions to answer.
 
 The first time you run it you need to sign in with a microsoft account.
