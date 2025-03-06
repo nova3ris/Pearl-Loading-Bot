@@ -37,7 +37,7 @@ If you ever need to reset the config, manually delete `config.json` as well as `
   2. Open the invite link in a web browser and select the server to invite the bot to
 * Now in your discord server:
   1. Create a [channel to manage the proxy in](https://i.imgur.com/DVeJBpo.png)
-* At first launch, the launcher will ask you to configure the token/role/channel ID's (or you can use `discord` command after)
+* At first launch, the launcher will ask you to configure the token/channel ID's
   * To get the ID's, you must enable [Developer Mode](https://i.imgur.com/qujvmiC.png) in your discord user settings
   * Right-click on the roles/channels you created and [click "Copy ID"](https://i.imgur.com/RDm3Gso.png)
 
