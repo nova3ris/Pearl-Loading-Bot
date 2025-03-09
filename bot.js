@@ -111,9 +111,10 @@ function spawnBot() {
 
     bot.on('end', (reason) => {
         console.log(`Bot disconnected. Reason: ${reason}`)
+        discordLog(`Bot disconnected. Reason: ${reason}`)
         if (config.autoReconnect && reason != 'disconnect.quitting') {
             console.log('Reconnecting..')
-            setTimeout(spawnBot, 20000)
+            setTimeout(spawnBot, 10000)
         } else {
             bot.end()
         }
