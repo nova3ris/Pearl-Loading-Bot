@@ -111,7 +111,6 @@ function spawnBot() {
 
     bot.once('spawn', () => {
         console.log('Connected to server.')
-        discordLog('Connected to server.')
         const defaultMove = new Movements(bot)
         defaultMove.canDig = false
         bot.pathfinder.setMovements(defaultMove)

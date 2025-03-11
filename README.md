@@ -15,7 +15,7 @@ The Pearl Bot is a Mineflayer-based Minecraft bot designed to automate Ender Pea
 ### Requirements
 - Node.js (latest stable version recommended) - https://nodejs.org/en/download
 - A Minecraft account (Microsoft authentication supported)
-- A Zenith Proxy to connect .
+- A Zenith Proxy to connect to.
 
 ### Setup
 You need a zenith proxy to connect to, The bot gets confused with 2b2t's separate queue server and I dont know how to fix it.
