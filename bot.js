@@ -7,6 +7,8 @@ const antiafk = require('mineflayer-antiafk')
 const { Vec3 } = require('vec3')
 const fs = require('fs')
 
+let botRunning = true
+
 let client
 if (config.discordBot) {
     const { Client, GatewayIntentBits } = require('discord.js')
@@ -23,11 +25,17 @@ if (config.discordBot) {
 
     client.on('messageCreate', (message) => {
         if (message.content === '!stop') {
-            message.reply('`Shutting down pearl bot`')
-            bot.quit()
+            if (botRunning) {
+                message.reply('`Shutting down pearl bot`')
+                bot.quit()
+            } else
+                message.reply('`Bot is already stopped`')
         } else if (message.content === '!start') {
-            message.reply('`Starting pearl bot`')
-            spawnBot()
+            if (!botRunning) {
+                message.reply('`Starting pearl bot`')
+                spawnBot()
+            } else
+                message.reply('`Discord bot is already running`')
         }
     })
 }

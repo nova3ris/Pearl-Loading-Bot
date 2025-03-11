@@ -15,7 +15,7 @@ let token
 let channelID
 if (discordBot) {
     token = readline.question('What is the discord bot token? ')
-    channelID = readline.question('What is the channelID of the channel you want to manage the bot in? ')
+    channelID = readline.question('What is the channel ID of the channel you want to manage the bot in? ')
 }
 
 const answers = {
