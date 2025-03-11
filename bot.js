@@ -28,12 +28,14 @@ if (config.discordBot) {
             if (botRunning) {
                 message.reply('`Shutting down pearl bot`')
                 bot.quit()
+                botRunning = false
             } else
                 message.reply('`Bot is already stopped`')
         } else if (message.content === '!start') {
             if (!botRunning) {
                 message.reply('`Starting pearl bot`')
                 spawnBot()
+                botRunning = true
             } else
                 message.reply('`Discord bot is already running`')
         }
@@ -119,7 +121,9 @@ function spawnBot() {
 
     bot.on('end', (reason) => {
         console.log(`Bot disconnected. Reason: ${reason}`)
-        discordLog(`Bot disconnected. Reason: ${reason}`)
+        if (reason !== 'disconnect.quitting') {
+            discordLog(`Bot disconnected. Reason: ${reason}`)
+        }
         if (config.autoReconnect && reason != 'disconnect.quitting') {
             console.log('Reconnecting..')
             setTimeout(spawnBot, 10000)
