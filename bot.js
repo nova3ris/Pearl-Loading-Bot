@@ -24,6 +24,7 @@ if (config.discordBot) {
     })
 
     client.on('messageCreate', (message) => {
+        if (message.channel.id !== config.channelID) return
         if (message.content === '!stop') {
             if (botRunning) {
                 message.reply('`Shutting down pearl bot`')
@@ -120,9 +121,7 @@ function spawnBot() {
 
     bot.on('end', (reason) => {
         console.log(`Bot disconnected. Reason: ${reason}`)
-        if (reason !== 'disconnect.quitting') {
-            discordLog(`Bot disconnected. Reason: ${reason}`)
-        }
+
         if (config.autoReconnect && reason != 'disconnect.quitting') {
             console.log('Reconnecting..')
             setTimeout(spawnBot, 10000)
