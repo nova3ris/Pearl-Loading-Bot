@@ -24,7 +24,7 @@ if (config.discordBot) {
     })
 
     client.on('messageCreate', (message) => {
-        if (message.channel.id !== config.channelID) return
+        if (message.channel.id) return
         if (message.content === '!stop') {
             if (botRunning) {
                 message.reply('`Shutting down pearl bot`')
