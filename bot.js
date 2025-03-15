@@ -47,7 +47,11 @@ function discordLog(content) {
     if (config.discordBot) {
         const channel = client.channels.cache.get(config.channelID)
         if (channel) {
-            channel.send(`\`${content}\``)
+            try {
+                channel.send(`\`${content}\``)
+            } catch (error) {
+                console.log(`Could not send message: ${error}`)
+            }
         } else
             console.log('Could not find a discord channel to send messages to.')
     }
