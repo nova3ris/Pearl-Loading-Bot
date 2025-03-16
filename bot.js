@@ -186,6 +186,12 @@ function initCommands() {
                     } else bot.chat(`/w ${username} ${lastWord} Does not have a pearl added.`)
                 } else bot.chat(`/w ${username} Invalid syntax.`)
 
+            } else if (message.startsWith('!home')) {
+                bot.pathfinder.setGoal(new goals.GoalBlock(config.homePoint.x, config.homePoint.y, config.homePoint.z))
+                bot.once('goal_reached', () => {
+                    bot.chat(`/w ${username} Returned to home point.`)
+                })
+                
             } else if (message.startsWith('!whitelist')) {
                 const parts = message.split(' ')
                 const mode = parts[1]
