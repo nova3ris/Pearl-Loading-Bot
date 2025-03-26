@@ -10,6 +10,7 @@ const { autototem } = require('mineflayer-auto-totem');
 
 // This is to stop the user using !afk on or !afk off if the antiafk is already on/off
 let afk = true;
+let running = true;
 
 // Only makes a discord bot if the user chooses to enable it
 let client;
@@ -32,18 +33,18 @@ if (config.discordBot) {
         if (message.channel.id !== config.channelID) return;
         if (message.content.toLowerCase() === '!stop') {
             // Makes sure the bot is running before trying to stop it
-            if (bot) {
+            if (running) {
                 message.reply('`Shutting down pearl bot`');
                 bot.quit();
-                botRunning = false;
+                running = false;
             } else
                 message.reply('`Bot is already stopped`');
         } else if (message.content.toLowerCase() === '!start') {
             // Makes sure the bot is stopped before trying to start it
-            if (!bot) {
+            if (!running) {
                 message.reply('`Starting pearl bot`');
                 spawnBot();
-                botRunning = true;
+                running = true;
             } else
                 message.reply('`Discord bot is already running`');
         }
