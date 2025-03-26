@@ -8,8 +8,8 @@ const { Vec3 } = require('vec3');
 const fs = require('fs');
 const { autototem } = require('mineflayer-auto-totem');
 
-// This is to stop the user using !start or !stop if the bot is already running/stopped
-let botRunning = true;
+// This is to stop the user using !afk on or !afk off if the antiafk is already on/off
+let afk = true;
 
 // Only makes a discord bot if the user chooses to enable it
 let client;
@@ -32,7 +32,7 @@ if (config.discordBot) {
         if (message.channel.id !== config.channelID) return;
         if (message.content.toLowerCase() === '!stop') {
             // Makes sure the bot is running before trying to stop it
-            if (botRunning) {
+            if (bot) {
                 message.reply('`Shutting down pearl bot`');
                 bot.quit();
                 botRunning = false;
@@ -40,7 +40,7 @@ if (config.discordBot) {
                 message.reply('`Bot is already stopped`');
         } else if (message.content.toLowerCase() === '!start') {
             // Makes sure the bot is stopped before trying to start it
-            if (!botRunning) {
+            if (!bot) {
                 message.reply('`Starting pearl bot`');
                 spawnBot();
                 botRunning = true;
@@ -51,7 +51,58 @@ if (config.discordBot) {
 }
 
 // Declares bot here so it can be accessed globaly
-let bot;
+let bot = null;
+// Spawns the bot with a function, this allows it to be auto reconnected
+function spawnBot() {
+    // If there is already a bot instance it is shut down before a new one it made
+    if (bot) {
+        console.log('Bot instance already exists. Shutting down existing bot..');
+        bot.end();
+    }
+
+    // Creates a bot
+    bot = mineflayer.createBot({
+        host: config.host,
+        port: config.port,
+        username: config.username,
+        auth: 'microsoft'
+    });
+
+    bot.loadPlugin(pathfinder);
+    bot.loadPlugin(antiafk);
+    bot.loadPlugin(autototem);
+
+    // Once the bot spawns in it sets the movement and antiafk rules
+    bot.once('spawn', () => {
+        console.log('Connected to server.');
+        const defaultMove = new Movements(bot);
+        defaultMove.canDig = false;
+        bot.pathfinder.setMovements(defaultMove);
+        bot.afk.setOptions({ actions: ['rotate', 'walk', 'swingArm'], chatMessages: [], fishing: false });
+        bot.afk.start();
+    });
+
+    // Checks if the bot is disconnected
+    bot.on('end', (reason) => {
+        console.log(`Bot disconnected. Reason: ${reason}`);
+
+        // Only reconnects if the user enabled auto reconnect. Also makes sure it wasn't shut down intentionally
+        if (config.autoReconnect && reason != 'disconnect.quitting') {
+            console.log('Reconnecting..');
+            setTimeout(spawnBot, 10000);
+        } else {
+            // If those requirements aren't met, the bot simply ends.
+            bot.end();
+        }
+    });
+
+    // Equip a totem every time it can
+    bot.on("physicTick", async () => {
+        bot.autototem.equip();
+    });
+
+    initCommands();
+}
 
 function pearl(username, message) {
     // Split the message up to find the name of the person getting pearled, and check if they are saved in the pearls.json file
@@ -95,6 +146,7 @@ function here(username) {
     const player = bot.players[username];
     if (!player) {
         bot.chat(`/w ${username} I can't see you.`);
+        return;
     }
 
     // Move to the player
@@ -169,7 +221,7 @@ function manageWhitelist(username, message) {
     } else bot.chat(`/w ${username} Invalid syntax.`);
 }
 
-// Functions hereon are only required by other functions
+// Helper commands
 function savePearls() {
     fs.writeFileSync('pearls.json', JSON.stringify(pearls, null, 2), 'utf-8');
 }
@@ -198,57 +250,6 @@ function discordLog(content) {
     }
 }
 
-// Spawns the bot with a function, this allows it to be auto reconnected
-function spawnBot() {
-    // If there is already a bot instance it is shut down before a new one it made
-    if (bot) {
-        console.log('Bot instance already exists. Shutting down existing bot..');
-        bot.end();
-    }
-
-    // Creates a bot
-    bot = mineflayer.createBot({
-        host: config.host,
-        port: config.port,
-        username: config.username,
-        auth: 'microsoft'
-    });
-
-    bot.loadPlugin(pathfinder);
-    bot.loadPlugin(antiafk);
-    bot.loadPlugin(autototem);
-
-    // Once the bot spawns in it sets the movement and antiafk rules
-    bot.once('spawn', () => {
-        console.log('Connected to server.');
-        const defaultMove = new Movements(bot);
-        defaultMove.canDig = false;
-        bot.pathfinder.setMovements(defaultMove);
-        bot.afk.setOptions({ actions: ['rotate', 'jump', 'walk', 'swingArm'], chatMessages: [], fishing: false });
-        bot.afk.start();
-    });
-
-    // Checks if the bot is disconnected
-    bot.on('end', (reason) => {
-        console.log(`Bot disconnected. Reason: ${reason}`);
-
-        // Only reconnects if the user enabled auto reconnect. Also makes sure it wasn't shut down intentionally
-        if (config.autoReconnect && reason != 'disconnect.quitting') {
-            console.log('Reconnecting..');
-            setTimeout(spawnBot, 10000);
-        } else {
-            // If those requirements aren't met, the bot simply ends.
-            bot.end();
-        }
-    });
-
-    bot.on("physicTick", async () => {
-        bot.autototem.equip()
-    })
-
-    initCommands();
-}
-
 function initCommands() {
     bot.on('whisper', (username, message) => {
         if (whitelist.includes(username)) {
@@ -272,6 +273,30 @@ function initCommands() {
 
             } else if (message.startsWith('!whitelist')) {
                 manageWhitelist(username, message);
+
+            } else if (message.startsWith('!afk')) {
+                
+                // Split the message up
+                const parts = message.split();
+                const lastWord = parts[1];
+
+                // Check if the user wants to turn it on or off
+                if (lastWord === 'on') {
+                    // Only turns it on if afk is off
+                    if (!afk) {
+                        bot.afk.start();
+                        afk = true;
+                    } else
+                        bot.chat(`/w ${username} AntiAFK is already running.`);
+                } else if (lastWord === 'off') {
+                    // Only turns it off if afk is on
+                    if (afk) {
+                        bot.afk.stop();
+                        afk = false;
+                    } else
+                        bot.chat(`/w ${username} AntiAFK is already stopped.`);
+                }
+
             } else bot.chat(`/w ${username} That is not a valid command. Use !help for a guide.`);
 
             // Logs the command to the console and discord (If the bot is enabled)

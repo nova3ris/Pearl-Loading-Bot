@@ -69,6 +69,7 @@ To pearl someone type the command `!pearl` followed by the name that corresponds
 - `!chamber add/del [name]` - Adds or deletes someones pearl chamber.
 - `!whitelist add/del [username]` - Adds or removes someone from the whitelist.
 - `!home` - Makes the bot walk to its home point.
+- `!afk on/off` - Turns AntiAFK on or off
 
 ## Discord Commands
 - `!stop` - Stops the bot until it is started up again.
