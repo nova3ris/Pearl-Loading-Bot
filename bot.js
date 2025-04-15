@@ -55,7 +55,7 @@ if (config.discordBot) {
 let bot = null;
 // Spawns the bot with a function, this allows it to be auto reconnected
 function spawnBot() {
-    // If there is already a bot instance it is shut down before a new one it made
+    // If there is already a bot instance it is shut down before a new one is made
     if (bot) {
         console.log('Bot instance already exists. Shutting down existing bot..');
         bot.end();

@@ -1,3 +1,5 @@
+**This project has come to an end due to the release of ZenithProxy 3.0. It will no longer be updated and I recommend to switch to the Zenith Proxy bot commands if you still want to use a pearl bot.**
+
 # Pearl Bot
 
 ## Description
